@@ -1,4 +1,3 @@
-
 /**
  * 分区业务状况一览图,条形图
  * dataOptions{
@@ -27,10 +26,8 @@ function barChart(dataOptions) {
 		'yDomain':[1,2,3,4,5]//默认的y比例尺的自变量
 	};
 	var initDataOption = {};//设置插件中使用的对象
+	initDataOption = defalutDataOptions;
 
-	for(var initTem in defalutDataOptions){
-		initDataOption[initTem]=defalutDataOptions[initTem];
-	}
 	for(var tem in dataOptions){
 		initDataOption[tem]=dataOptions[tem];
 	}
@@ -286,4 +283,4 @@ function bar_draw_title(name_color,title_con_g){
 			appendMultiText(title_g,name_color[i].C_name,25,7,50,12,'微软雅黑');
 		}
 	}
-}
+};
