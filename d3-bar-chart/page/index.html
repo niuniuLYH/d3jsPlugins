@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+ <html>
+   <head lang = "en">
+     <meta charset = "UTF-8">
+     <title>d3封装的条形统计图</title>
+       <link rel="stylesheet" href="../css/barChart.css"/>
+   </head>
+ <body id="databaseBodyId">
+    <div id="test-bar-chart"></div>
+
+ <script type="text/javascript" src = "../js/d3.v3.min.js"></script>
+ <script type="text/javascript" src="../js/multext.js"></script>
+ <script type="text/javascript" src="../js/barChart.js"></script>
+ <script type="text/javascript">
+     (function(){
+         drawBarChart();
+     })();
+     /**
+      * 统计图主函数
+      */
+     function drawBarChart (){
+//         d3.json("resources/bar_chart_data.json")
+//             .header("Content-Type", "application/x-www-form-urlencoded")
+//             .get("",function(error, data) {
+                 var memory = initData().memory;
+                 var color_arr = ["#9B69FB","#9EC935","#73E5FD","#FA8356","#466928","#99CC33","#00CBFF","#005CFD","#003399","#8966FD"];
+                 var refreshChart = barChart({
+                     'containerId':'test-bar-chart',
+                     'data':memory,
+                     'colorArr':color_arr,
+                     'margin':{top: 30, right: 50, bottom: 30, left: 0},
+                     'legendWidth':100,
+                     'axisName' : ["%",""],
+                     'titleContent':'内存',
+                     'titleHeight':40
+                 });
+//             })
+     }
+     /**
+      * 虚拟数据函数
+      */
+     function initData() {
+         return {
+             'memory': {
+                 "pga": {
+                     "name": "PGA",
+                     "value": "700"
+                 },
+                 "sga": {
+                     "name": "sga",
+                     "value": "200"
+                 },
+                 "shared_io": {
+                     "name": "共享I/O池",
+                     "value": "400"
+                 },
+                 "java_pool": {
+                     "name": "JAVA池",
+                     "value": "500"
+                 },
+                 "shared_pool": {
+                     "name": "共享池",
+                     "value": "500"
+                 },
+                 "large_pill": {
+                     "name": "大型池",
+                     "value": "420"
+                 },
+                 "buffer_cache": {
+                     "name": "缓冲区高速缓存",
+                     "value": "700"
+                 }
+             }
+         }
+     }
+ </script>
+ </body>
+</html>

@@ -1,0 +1,57 @@
+ul.nav > li h3:hover,.choice{ background: #FFF!important; border: 1px solid #58D1F7; cursor: pointer;}
+*{
+    margin: 0;
+    padding: 0;
+}
+#databaseBodyId{
+    width: 100%;
+    height: 100%;
+}
+#test-bar-chart{
+    position: absolute;
+    top: 50px;
+    left: 200px;
+    right: 200px;
+    bottom: 50px;
+    background: #0F1B29;
+}
+
+/*折线图样式*/
+.axis{
+    fill:#265076;
+}
+.axis path{
+     fill: none;
+     stroke: #225078;
+     stroke-width:2;
+ }
+.axis text{
+    fill:#265076;
+    font-size:12px;
+}
+.axis line {
+    fill: none;
+    stroke: #15272D;
+    shape-rendering: crispEdges;
+}
+.legend_name_g text{
+    fill:#588C9E;
+    font-size: 12px;
+}
+.title_con text{
+    fill:#67BEDA;
+    font-size: 16px;
+}
+.tooltip {
+    position: fixed;
+    width: auto;
+    height: auto;
+    font-size: 14px;
+    text-align: left;
+    padding: 8px 15px 8px 15px;
+    background-color: #03101b;
+    opacity: 0.75;
+    border-radius: 2px;
+    color: #BEE2EB;
+}
+/*折线图样式*/
