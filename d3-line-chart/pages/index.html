@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+ <html>
+   <head lang = "en">
+     <meta charset = "UTF-8">
+     <title>d3封装的折线图</title>
+       <link rel="stylesheet" href="../css/barChart.css"/>
+   </head>
+ <body id="databaseBodyId">
+    <div id="test-line-chart"></div>
+
+ <script type="text/javascript" src = "../js/d3.v3.min.js"></script>
+ <script type="text/javascript" src="../js/lineChart.js"></script>
+ <script type="text/javascript">
+     (function(){
+         drawLineChart();
+     })();
+     /**
+      * 折线图主函数
+      */
+     function drawLineChart (){
+//         d3.json("resources/line_chart_data2.json")
+//                 .header("Content-Type", "application/x-www-form-urlencoded")
+//                 .get("",function(error, data) {
+         var lineData = initData();
+         lineChartFun({
+             'containerId':'test-line-chart',
+             'data':lineData,
+             'colorArr':["#9B69FB","#9EC935","#73E5FD","#FA8356","#466928","#99CC33","#00CBFF","#005CFD","#003399","#8966FD"],
+             'margin':{top: 30, right: 20, bottom: 30, left: 60},
+             'legendWidth':'100',
+             'axisName' : ["利用率","时间"],
+             'titleContent':'测试测试',
+             'titleHeight':'20',
+             'hasArea':true,
+             'durations':2000
+         });
+     }
+     /**
+      * 虚拟数据函数
+      */
+     function initData() {
+         return {
+             "data_arr": [
+                 {
+                     "day": "1:10",
+                     "cpu": "500",
+                     "memory": "220",
+                     "userIO": "320",
+                     "test": "100"
+                 },
+                 {
+                     "day": "2:10",
+                     "cpu": "213",
+                     "memory": "123",
+                     "userIO": "432",
+                     "test": "370"
+                 },
+                 {
+                     "day": "3:10",
+                     "cpu": "109",
+                     "memory": "128",
+                     "userIO": "304",
+                     "test": "276"
+                 },
+                 {
+                     "day": "4:10",
+                     "cpu": "200",
+                     "memory": "324",
+                     "userIO": "102",
+                     "test": "457"
+                 },
+                 {
+                     "day": "5:10",
+                     "cpu": "302",
+                     "memory": "532",
+                     "userIO": "22",
+                     "test": "41"
+                 },
+                 {
+                     "day": "6:10",
+                     "cpu": "213",
+                     "memory": "300",
+                     "userIO": "213",
+                     "test": "452"
+                 },
+                 {
+                     "day": "7:10",
+                     "cpu": "210",
+                     "memory": "321",
+                     "userIO": "402",
+                     "test": "312"
+                 },
+                 {
+                     "day": "8:10",
+                     "cpu": "190",
+                     "memory": "289",
+                     "userIO": "186",
+                     "test": "240"
+                 },
+                 {
+                     "day": "9:10",
+                     "cpu": "490",
+                     "memory": "389",
+                     "userIO": "486",
+                     "test": "120"
+                 },
+                 {
+                     "day": "10:30",
+                     "cpu": "490",
+                     "memory": "389",
+                     "userIO": "486",
+                     "test": "200"
+                 }
+             ],
+             "host_name_map":{
+                 "cpu":"CPU",
+                 "test":"测试",
+                 "memory":"内存",
+                 "userIO":"用户IO"
+             }
+         }
+     }
+ </script>
+ </body>
+</html>
