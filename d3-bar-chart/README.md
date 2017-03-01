@@ -1,14 +1,14 @@
 #统计图的使用方法
 ###统计图方法传递的参数详解
 	dataOptions{  
-	'containerId':'cpu-div',--图表的包含框的id。类型：字符串  
-	'data':cpu,--传递的数据结构。类型：对象  
-	'colorArr':color_arr,--颜色数组。类型：数组  
-	'margin':{top: 30, right: 50, bottom: 30, left: 0},--图表和包含框之间的距离。 类型：对象  
-	'legendWidth':100,--图例的宽度定义 类型：数字类型  
-	'axisName':["%",""],--x轴和y轴的名字，类型：数组，分别存放x轴和y轴的名字  
-	'titleContent':'CPU',--图表的title。类型：字符串  
-	'titleHeight':40--图表title的高度。类型：数字类型  
+	'containerId':'cpu-div',--图表的包含框的id。类型：字符串，【必要值】  
+	'data':cpu,--传递的数据结构。类型：对象【必要值】  
+	'colorArr':color_arr,--颜色数组。类型：数组【不必要值，可不要该项】  
+	'margin':{top: 30, right: 50, bottom: 30, left: 0},--图表和包含框之间的距离。 类型：对象 【不必要值，可不要该项】  
+	'legendWidth':100,--图例的宽度定义 类型：数字类型【不必要值，可不要该项】  
+	'axisName':["%",""],--x轴和y轴的名字，类型：数组，分别存放x轴和y轴的名字【必须值】  
+	'titleContent':'CPU',--图表的title。类型：字符串【不必要值，可不要该项】  
+	'titleHeight':40--图表title的高度。类型：数字类型【不必要值，可不要该项】  
   	}  
 ###统计图数据类型格式
  {  
@@ -16,8 +16,8 @@
                  "pga": {//数据的英文名   
                      "name": "PGA",//中文名  
                      "value": "700"//值  
-                 },  
-                 "sga": {  
+                 },  
+                 "sga": {  
                      "name": "sga",  
                      "value": "200"  
                  },  
