@@ -228,16 +228,16 @@
 					bar_tooltips
 						.html(d.C_name + '：'+ d.value)
 						.style({
-							'left':d3.event.pageX + 'px',
-							'top':d3.event.pageY + 'px',
+							'left':d3.event.pageX + 10 + 'px',
+							'top':d3.event.pageY + 10 + 'px',
 							'display':'block'
 						})
 					})
 					.on("mousemove", function (d) {
 						bar_tooltips.style({
 							//'display':'block',
-							'left':d3.event.pageX + 'px',
-							'top':d3.event.pageY + 'px'
+							'left':d3.event.pageX +10 + 'px',
+							'top':d3.event.pageY + 10 + 'px'
 						});
 					})
 					.on("mouseout", function (d) {
