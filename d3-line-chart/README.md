@@ -54,12 +54,7 @@
     "userIO":"用户IO"  
   }  
 }  
-
-
-
-
-
-         多个图表使用一个数据结构传递时，请参考resources/bar-chart-data.json  
+  多个图表使用一个数据结构传递时，请参考resources/line-chart-datas.json  
 ###使用规则
        1. 图表包含框必须要有一个初始化的宽度和高度。
        2. 图标样式修改，参考css/barChart.css  
