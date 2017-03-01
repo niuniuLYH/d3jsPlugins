@@ -19,22 +19,19 @@
       * 统计图主函数
       */
      function drawBarChart (){
-//         d3.json("resources/bar_chart_data.json")
-//             .header("Content-Type", "application/x-www-form-urlencoded")
-//             .get("",function(error, data) {
-                 var memory = initData().memory;
-                 var color_arr = ["#9B69FB","#9EC935","#73E5FD","#FA8356","#466928","#99CC33","#00CBFF","#005CFD","#003399","#8966FD"];
-                 var refreshChart = barChart({
-                     'containerId':'test-bar-chart',
-                     'data':memory,
-                     'colorArr':color_arr,
-                     'margin':{top: 30, right: 50, bottom: 30, left: 0},
-                     'legendWidth':100,
-                     'axisName' : ["%",""],
-                     'titleContent':'内存',
-                     'titleHeight':40
-                 });
-//             })
+
+         var memory = initData().memory;
+         var color_arr = ["#9B69FB","#9EC935","#73E5FD","#FA8356","#466928","#99CC33","#00CBFF","#005CFD","#003399","#8966FD"];
+         var refreshChart =  document.barChartFun({
+             'containerId':'test-bar-chart',
+             'data':memory,
+             'colorArr':color_arr,
+             'margin':{top: 30, right: 50, bottom: 30, left: 0},
+             'legendWidth':100,
+             'axisName' : ["%",""],
+             'titleContent':'内存',
+             'titleHeight':40
+         });
      }
      /**
       * 虚拟数据函数
