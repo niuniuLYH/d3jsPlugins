@@ -47,4 +47,5 @@
 ###使用规则
        1. 图表包含框必须要有一个初始化的宽度和高度。
        2. 图标样式修改，参考css/barChart.css  
-       3. 具体调用方法，参考pages/index.html
+       3. 具体调用方法，参考pages/index.html  
+###新加文件drawChart2.js，模块化drawChart.js，具体调用方法参照index.html
