@@ -10,13 +10,20 @@ ul.nav > li h3:hover,.choice{ background: #FFF!important; border: 1px solid #58D
 #test-bar-chart{
     position: absolute;
     top: 50px;
-    left: 200px;
-    right: 200px;
+    left: 0;
+    right: 50%;
     bottom: 50px;
     background: #0F1B29;
 }
-
-/*ÕÛÏßÍ¼ÑùÊ½*/
+#test-bar-chart2{
+    position: absolute;
+    top: 50px;
+    left: 50.5%;
+    right: 0;
+    bottom: 50px;
+    background: #0F1B29;
+}
+/*ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Ê½*/
 .axis{
     fill:#265076;
 }
@@ -54,4 +61,4 @@ ul.nav > li h3:hover,.choice{ background: #FFF!important; border: 1px solid #58D
     border-radius: 2px;
     color: #BEE2EB;
 }
-/*ÕÛÏßÍ¼ÑùÊ½*/
+/*ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Ê½*/

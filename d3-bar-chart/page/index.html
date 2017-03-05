@@ -7,10 +7,12 @@
    </head>
  <body id="databaseBodyId">
     <div id="test-bar-chart"></div>
+    <div id="test-bar-chart2"></div>
 
  <script type="text/javascript" src = "../js/d3.v3.min.js"></script>
  <script type="text/javascript" src="../js/multext.js"></script>
- <script type="text/javascript" src="../js/barChart.js"></script>
+ <!--<script type="text/javascript" src="../js/barChart.js"></script>-->
+ <script type="text/javascript" src="../js/barChart2.js"></script>
  <script type="text/javascript">
      (function(){
          drawBarChart();
@@ -20,11 +22,26 @@
       */
      function drawBarChart (){
 
-         var memory = initData().memory;
          var color_arr = ["#9B69FB","#9EC935","#73E5FD","#FA8356","#466928","#99CC33","#00CBFF","#005CFD","#003399","#8966FD"];
-         var refreshChart =  document.barChartFun({
+         /***barChart.js对应的调用方法**/
+//         var refreshChart =  document.barChartFun({//刷新时直接调用refreshChart方法，并把这里的'data':memory,传递进去
+//             'containerId':'test-bar-chart',
+//             'data':initData(0).memory,
+//             'colorArr':color_arr,
+//             'margin':{top: 30, right: 50, bottom: 30, left: 0},
+//             'legendWidth':100,
+//             'axisName' : ["%",""],
+//             'titleContent':'内存',
+//             'titleHeight':40
+//         });
+//         setTimeout(function(){//测试刷新数据，设置5s后刷新新的数据
+//             refreshChart(initData(1).memory);
+//         },5000);
+
+         /**barChart2.js对应的调用方法***/
+         var drawChart1 = new barChart();
+         drawChart1.initBarChart({
              'containerId':'test-bar-chart',
-             'data':memory,
              'colorArr':color_arr,
              'margin':{top: 30, right: 50, bottom: 30, left: 0},
              'legendWidth':100,
@@ -32,43 +49,94 @@
              'titleContent':'内存',
              'titleHeight':40
          });
+         drawChart1.refreshChart(initData(0).memory);//之后需要刷新数据，直接调用改方法，并把最新的数据传递进去
+
+         var drawCart2 = new barChart();
+         drawCart2.initBarChart({
+             'containerId':'test-bar-chart2',
+             'colorArr':color_arr,
+             'margin':{top: 30, right: 50, bottom: 30, left: 0},
+             'legendWidth':100,
+             'axisName' : ["%",""],
+             'titleContent':'内存',
+             'titleHeight':40
+         });
+         drawCart2.refreshChart(initData(1).memory);//之后需要刷新数据，直接调用改方法，并把最新的数据传递进去
+         setTimeout(function(){//测试刷新，5S之后制动刷新
+             drawCart2.refreshChart(initData(0).memory);
+         },5000)
      }
      /**
       * 虚拟数据函数
       */
-     function initData() {
-         return {
-             'memory': {
-                 "pga": {
-                     "name": "PGA",
-                     "value": "700"
-                 },
-                 "sga": {
-                     "name": "sga",
-                     "value": "200"
-                 },
-                 "shared_io": {
-                     "name": "共享I/O池",
-                     "value": "400"
-                 },
-                 "java_pool": {
-                     "name": "JAVA池",
-                     "value": "500"
-                 },
-                 "shared_pool": {
-                     "name": "共享池",
-                     "value": "500"
-                 },
-                 "large_pill": {
-                     "name": "大型池",
-                     "value": "420"
-                 },
-                 "buffer_cache": {
-                     "name": "缓冲区高速缓存",
-                     "value": "700"
-                 }
+     function initData(flag) {
+         switch (flag){
+             case 0:{
+                 return {
+                     'memory': {
+                         "pga": {
+                             "name": "PGA",
+                             "value": "700"
+                         },
+                         "sga": {
+                             "name": "sga",
+                             "value": "200"
+                         },
+                         "shared_io": {
+                             "name": "共享I/O池",
+                             "value": "400"
+                         },
+                         "java_pool": {
+                             "name": "JAVA池",
+                             "value": "500"
+                         },
+                         "shared_pool": {
+                             "name": "共享池",
+                             "value": "500"
+                         },
+                         "large_pill": {
+                             "name": "大型池",
+                             "value": "420"
+                         },
+                         "buffer_cache": {
+                             "name": "缓冲区高速缓存",
+                             "value": "700"
+                         }
+                     }
+                 };
+                 break;
+             }
+             case 1 :{
+                 return {
+                     'memory': {
+                         "pga": {
+                             "name": "PGA",
+                             "value": "700"
+                         },
+                         "sga": {
+                             "name": "sga",
+                             "value": "200"
+                         },
+                         "shared_io": {
+                             "name": "共享I/O池",
+                             "value": "400"
+                         },
+                         "java_pool": {
+                             "name": "JAVA池",
+                             "value": "500"
+                         },
+                         "shared_pool": {
+                             "name": "共享池",
+                             "value": "500"
+                         }
+
+                     }
+                 };
+                 break;
              }
          }
+
+
      }
  </script>
  </body>
