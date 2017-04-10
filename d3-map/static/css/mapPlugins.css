@@ -1,0 +1,173 @@
+
+/*��ͼ��*/
+.map_div_out{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    height: 100%;
+}
+.contentBox{
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    background: url(../img/cbms-img/v403index/index-back.png) repeat ;
+}
+.indexMap{
+    position: relative;
+    top:100px;
+    bottom: 170px;
+    height: auto;
+    display: block;
+}
+.return-div {
+    line-height: 30px;
+    display: inline-block;
+    position: relative;
+    z-index: 7;
+    float: left;
+    color: #fff;
+    font-size: 14px;
+
+}
+
+.cenmap{
+    z-index: 0;
+    display: inline-block;
+    position: relative;
+    margin:0 auto;
+    height: 100%;
+    width: calc(100% - 20px);
+}
+.map-return-btn{
+    width: 80px;
+    height: 40px;
+    vertical-align: middle;
+}
+.southsea {
+    stroke: #7d8a92;
+    stroke-width: 1px;
+    fill: #19262E;
+}
+.circle{
+    fill:#21F1F1
+}
+.no_data_div{
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #051522;
+    border: 1px solid #1A4E5C;
+    text-align: center;
+    line-height: 50px;
+    position: absolute;
+    display: inline-block;
+    margin-left: 50%;
+    top: 50%;
+    left: -50px;
+    color: #517187;
+}
+.health_no_data{
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 50px;
+    display: inline-block;
+    color: #517187;
+}
+.tootip-style{
+    opacity:0;
+    position:absolute;
+    width:auto;
+    height:auto;
+    padding:5px 10px;
+    border:2px solid #e5e5e5;
+    font-family:simsun;
+    font-size:14px;
+    text-align:center;
+    background-color:black;
+    border-radius:5px;
+    z-index:1;
+    color: #fff;
+}
+.blingbling{
+    cursor: pointer;
+}
+.blingbling:hover{
+    fill:#28C1BF;
+}
+.yinhang_name_error{
+    border: 2px solid #DA5149 !important;
+}
+.has-data-show{
+    color:#19262E !important;
+}
+.has-data-show2{
+    color: #7d8a92 !important;
+}
+.circle-line-bg{
+    cursor: pointer;
+}
+
+.blingbling{
+    cursor: pointer;
+}
+.blingbling:hover{
+    fill:#28C1BF;
+}
+.yinhang_name_error{
+    border: 2px solid #DA5149 !important;
+}
+
+.javafile-span {
+    width: 62px;
+    display: inline-block;
+    border: none;
+    height: 22px;
+    border-radius: 22px !important;
+    line-height: 22px;
+    position: relative;
+    top: 5px;
+    background: #424242;
+    left:12px;
+    cursor: pointer;
+}
+.javafile-a {
+    width: 30px;
+    height: 30px;
+    background: #10EDE6;
+    display: inline-block;
+    border-radius: 50% !important;
+    float: right;
+    margin-right: 1px;
+    position: relative;
+    top: -26px;
+}
+.javafile-on,.javafile-off {
+    display: inline-block;
+    height: 100%;
+    width: 26px;
+    text-align: center;
+    color: #C2D1D6;
+    float: left;
+    font-size: 12px !important;
+}
+.javafile-on{
+    margin-left: 5px;
+}
+.slide-off{
+    background-color: #8F8F8F;
+}
+.unclick{
+    pointer-events: none;
+}
+.nanhai-div{
+    float: right;
+    display: inline-block;
+    position: relative;
+    left: -22%;
+    top: -22%;
+    width: 7%;
+}

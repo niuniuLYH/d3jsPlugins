@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/regionalMonitor.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/mapPlugins.css" />
     <style type="text/css">
-        .monitor-div{
-            height: 400px;
-            width: 70%;
-            display: block;
-            margin: 0 auto;
+        body{
+            background: #08111A;
         }
-
-
-        #monitor-map{
+        .monitor-div{
+            position: absolute;
+            height: 70%;
+            width: 80%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        #mapDiv{
             width: 100%;
             height: 100%;
             display: block;
@@ -22,19 +25,46 @@
 </head>
 <body>
     <div class="monitor-div">
-        <div class="content-body portlet-body" id="monitor-map">
+        <div class="content-body portlet-body" id="mapDiv">
 
         </div>
     </div>
-    <script src="../resources/js/d3.js" type="text/javascript"></script>
-    <script src="../static/js/monitorMap.js" type="text/javascript"></script>
+    <script src="../static/js/d3.js" type="text/javascript"></script>
+    <script src="../static/js/require.js"></script>
     <script type="text/javascript">
+        /**
+         * created by liyh
+         **/
+        require.config({
+            paths:{
+                'd3js':['../static/js/d3'],
+                'monitorMap':['../static/js/mapPlugins']
+
+            }
+        });
+
         (function(){
             var map_level = localStorage.getItem("map_level") || 0;
             var province_info = JSON.parse(localStorage.getItem("province_info"));
             var province_name = province_info?(map_level == 1 ? province_info.child_name : province_info.child_id) : "";
-            drawMaps("monitor-map",province_name,parseInt(map_level),province_info);
-        })()
+            var dataOptions1 = {
+                containerId:'mapDiv',
+                province_name : province_name,
+                map_level: parseInt(map_level),
+                province_info : province_info
+            };
+
+            require(['d3js','monitorMap'], function (d3,exportObj) {
+                var mapExample1 = new exportObj(dataOptions1);
+                mapExample1.drawMaps();
+            });
+        })();
+//        (function(){
+//            var map_level = localStorage.getItem("map_level") || 0;
+//            var province_info = JSON.parse(localStorage.getItem("province_info"));
+//            var province_name = province_info?(map_level == 1 ? province_info.child_name : province_info.child_id) : "";
+//            drawMaps("monitor-map",province_name,parseInt(map_level),province_info);
+//        })()
     </script>
 </body>
 </html>
