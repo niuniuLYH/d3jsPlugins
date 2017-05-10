@@ -27,9 +27,8 @@
     position: relative;
     z-index: 7;
     float: left;
-    color: #fff;
-    font-size: 14px;
-
+    color: #C6C6C2;
+    margin-top: 5px;
 }
 
 .cenmap{
@@ -37,12 +36,12 @@
     display: inline-block;
     position: relative;
     margin:0 auto;
-    height: 100%;
+    height: calc(100% - 80px);
     width: calc(100% - 20px);
 }
 .map-return-btn{
-    width: 80px;
-    height: 40px;
+    width: 60px;
+    height: 25px;
     vertical-align: middle;
 }
 .southsea {
@@ -77,6 +76,18 @@
     display: inline-block;
     color: #517187;
 }
+.no_data{
+    fill: #0D1A23;
+    stroke : #434D56;
+}
+
+.blingbling{
+    cursor: pointer;
+}
+
+.circle-line-bg{
+    cursor: pointer;
+}
 .tootip-style{
     opacity:0;
     position:absolute;
@@ -90,69 +101,43 @@
     background-color:black;
     border-radius:5px;
     z-index:1;
-    color: #fff;
 }
 .blingbling{
     cursor: pointer;
 }
-.blingbling:hover{
-    fill:#28C1BF;
-}
-.yinhang_name_error{
-    border: 2px solid #DA5149 !important;
-}
-.has-data-show{
-    color:#19262E !important;
-}
-.has-data-show2{
-    color: #7d8a92 !important;
-}
-.circle-line-bg{
-    cursor: pointer;
-}
-
-.blingbling{
-    cursor: pointer;
-}
-.blingbling:hover{
-    fill:#28C1BF;
-}
-.yinhang_name_error{
-    border: 2px solid #DA5149 !important;
-}
-
 .javafile-span {
-    width: 62px;
+    width: 45px;
     display: inline-block;
-    border: none;
-    height: 22px;
-    border-radius: 22px !important;
-    line-height: 22px;
+    border: 1px solid #B9C0CB;
+    height: 18px;
+    border-radius: 12px !important;
+    line-height: 20px;
     position: relative;
     top: 5px;
-    background: #424242;
-    left:12px;
+    background: none;
+    left: 12px;
     cursor: pointer;
 }
 .javafile-a {
-    width: 30px;
-    height: 30px;
-    background: #10EDE6;
+    width: 16px;
+    height: 16px;
+    background: rgb(214, 220, 228);
     display: inline-block;
     border-radius: 50% !important;
     float: right;
-    margin-right: 1px;
+    margin-right: 2px;
     position: relative;
-    top: -26px;
+    top: -17px;
 }
 .javafile-on,.javafile-off {
     display: inline-block;
     height: 100%;
-    width: 26px;
+    width: calc(50% - 6px);
     text-align: center;
     color: #C2D1D6;
     float: left;
-    font-size: 12px !important;
+    font-size: 10px !important;
+    line-height: 18px;
 }
 .javafile-on{
     margin-left: 5px;
@@ -163,11 +148,162 @@
 .unclick{
     pointer-events: none;
 }
-.nanhai-div{
-    float: right;
-    display: inline-block;
-    position: relative;
-    left: -22%;
-    top: -22%;
-    width: 7%;
+.map_truth .map{
+    transition: fill,stroke,transform 0.2s linear;
+    /* Firefox 4 */
+    -moz-transition:fill,stroke,transform 0.2s linear;
+    /* Safari and Chrome */
+    -webkit-transition:fill,stroke,transform 0.2s linear;
+    /* Opera */
+    -o-transition:fill,stroke,transform 0.2s linear;
+}
+.hover-map-style{
+    fill: #bdcbce;
+    stroke : #DEDFF3;
+    transform: translate(-3px,-5px);
+    -ms-transform: translate(-3px,-5px); /* IE 9 */
+    -webkit-transform: translate(-3px,-5px); /* Safari and Chrome */
+}
+
+.return-mark-g .cursor-path{
+    transition: fill,stroke,transform 0.5s linear;
+    cursor:pointer;
+}
+.return-mark-g{
+    transition: fill,stroke,transform 0.5s linear;
+    cursor:pointer;
+}
+.map-return-btn .svf-back{
+    transition: opacity 0.5s linear;
+}
+.switch-map-path{
+    fill:rgb(42, 153, 190)
+}
+.switch-map-g{
+    transform : translate(25px,0);
+    -ms-transform: translate(25px,0); /* IE 9 */
+    -webkit-transform: translate(25px,0); /* Safari and Chrome */
+}
+.switch-map-back{
+    opacity:100
+}
+
+.circle-least{
+    -webkit-animation:least-animate 1.5s infinite linear ;
+    -moz-animation:least-animate 1.5s infinite linear ;
+    -ms-animation:least-animate 1.5s infinite linear ;
+    animation:least-animate 1.5s infinite linear ;
+    -webkit-transform:translateZ(0);/*GPU硬件加速模式*/
+}
+.circle-middle{
+    -webkit-animation:middle-animate 1.5s infinite linear ;
+    -moz-animation:middle-animate 1.5s infinite linear ;
+    -ms-animation:middle-animate 1.5s infinite linear ;
+    animation:middle-animate 1.5s infinite linear ;
+    -webkit-transform:translateZ(0);/*GPU硬件加速模式*/
+}
+.circle-large{
+
+    -webkit-animation:large-animate 1.5s infinite linear ;
+    -moz-animation:large-animate 1.5s infinite linear ;
+    -ms-animation:large-animate 1.5s infinite linear ;
+    animation:large-animate 1.5s infinite linear ;
+    -webkit-transform:translateZ(0);/*GPU硬件加速模式*/
+}
+.stop-animate{
+    animation-play-state:paused;
+    -webkit-animation-play-state:paused; /* Safari 和 Chrome */
+}
+/**地图数据点的动画**/
+@-webkit-keyframes least-animate {
+     0%,100%{
+         fill: #B99951;
+         -webkit-transform: scale(1);
+     }
+     50%{
+         fill: rgb(211,180,113);
+         -webkit-transform: scale(2);
+     }
+ }
+@-moz-keyframes least-animate {
+    0%,100%{
+        fill: #B99951;
+        -moz-transform: scale(1);
+    }
+    50%{
+        fill: rgb(211,180,113);
+        -moz-transform: scale(2);
+    }
+}
+@-ms-keyframes least-animate {
+    0%,100%{
+        fill: #B99951;
+        -ms-transform: scale(1);
+    }
+    50%{
+        fill: rgb(211,180,113);
+        -ms-transform: scale(2);
+    }
+}
+
+@-webkit-keyframes middle-animate {
+    0%,100%{
+        fill: #00B98D;
+        -webkit-transform: scale(1);
+    }
+    50%{
+        fill: #5AE3C1;
+        -webkit-transform: scale(2);
+    }
+}
+@-moz-keyframes middle-animate {
+    0%,100%{
+        fill: #00B98D;
+        -moz-transform: scale(1);
+    }
+    50%{
+        fill: #5AE3C1;
+        -moz-transform: scale(2);
+    }
+}
+@-ms-keyframes middle-animate {
+    0%,100%{
+        fill: #00B98D;
+        -ms-transform: scale(1);
+    }
+    50%{
+        fill: #5AE3C1;
+        -ms-transform: scale(2);
+    }
+}
+
+@-webkit-keyframes large-animate {
+    0%,100%{
+        fill: #C2414C;
+        -webkit-transform: scale(1);
+    }
+    50%{
+        fill: #E87481;
+        -webkit-transform: scale(2);
+    }
+}
+@-moz-keyframes large-animate {
+    0%,100%{
+        fill: #C2414C;
+        -moz-transform: scale(1);
+    }
+    50%{
+        fill: #E87481;
+        -moz-transform: scale(2);
+    }
+}
+@-ms-keyframes large-animate {
+    0%,100%{
+        fill: #C2414C;
+        -ms-transform: scale(1);
+    }
+    50%{
+        fill: #E87481;
+        -ms-transform: scale(2);
+    }
 }

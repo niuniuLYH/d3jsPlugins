@@ -1,20 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
-<path fill="#0B0B0B" stroke="#383838" stroke-width="2" d="M10.4,5.7l2.4-2h27.7v43.5H10.4V5.7z"/>
-<path fill="#19262E" stroke="#7C8991" stroke-width="2" d="M7.6,2.8l2.4-2h27.7v43.5H7.6V2.8z"/>
-<path fill="none" stroke="#7C8991" d="M8.3,2.5l3,2.7H16l10.4-4.3h6.4l1.7,2.4l0.7-2.4"/>
-<path fill="none" stroke="#7C8991" d="M13.7,10.1l-0.3,2h1l1.4-2.7L13.7,10.1z"/>
-<path fill="none" stroke="#7C8991" d="M13,17.2l1.4,3"/>
-<path fill="none" stroke="#7C8991" d="M37,5.1l-2.7,2.7l1.4,0.7l1.7-2L37,5.1z"/>
-<path fill="none" stroke="#7C8991" stroke-linecap="round" d="M34.1,9.8l-2.4,3"/>
-<path fill="none" stroke="#7C8991" stroke-linecap="round" stroke-linejoin="round" d="M31.7,15.8h0.7v2.4h-0.7V15.8z"/>
-<path fill="none" stroke="#7C8991" stroke-linecap="round" stroke-linejoin="round" d="M31.2,23.7h0.6l-1.1,2.1h-0.5L31.2,23.7z"/>
-<path fill="none" stroke="#7C8991" stroke-linecap="round" stroke-linejoin="round" d="M15.1,24.7h0.6L14,26.9l-0.7,0.3L15.1,24.7z"
-	/>
-<path fill="none" stroke="#7C8991" stroke-linecap="round" stroke-linejoin="round" d="M21,38.9l-1.4,1h-1.4"/>
-<path fill="none" stroke="#7C8991" stroke-linecap="round" stroke-linejoin="round" d="M28,31.5l-2.7,3h0.7L28,31.5z"/>
-<path fill="none" stroke="#7C8991" stroke-linecap="round" stroke-linejoin="round" d="M10.7,32.6l1,1.4L11,32.2L10.7,32.6z"/>
+<svg 
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ width="77.5px" height="109.5px">
+<path fill-rule="evenodd"  stroke="rgb(50, 52, 54)" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" fill="rgb(15, 16, 16)"
+ d="M6.756,12.392 C6.756,12.392 12.127,7.779 12.127,7.779 C12.127,7.779 75.819,7.779 75.819,7.779 C75.819,7.779 75.819,107.739 75.819,107.739 C75.819,107.739 6.756,107.739 6.756,107.739 C6.756,107.739 6.756,12.392 6.756,12.392 Z"/>
+<path fill-rule="evenodd"  stroke="rgb(176, 183, 188)" stroke-width="2px" stroke-linecap="butt" stroke-linejoin="miter" fill="rgb(54, 86, 120)"
+ d="M1.220,5.737 C1.220,5.737 6.592,1.123 6.592,1.123 C6.592,1.123 70.283,1.123 70.283,1.123 C70.283,1.123 70.283,101.084 70.283,101.084 C70.283,101.084 1.220,101.084 1.220,101.084 C1.220,101.084 1.220,5.737 1.220,5.737 Z"/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" fill="none"
+ d="M2.755,4.968 C2.755,4.968 9.661,11.119 9.661,11.119 C9.661,11.119 20.404,11.119 20.404,11.119 C20.404,11.119 44.193,1.123 44.193,1.123 C44.193,1.123 58.773,1.123 58.773,1.123 C58.773,1.123 62.610,6.506 62.610,6.506 C62.610,6.506 64.145,1.123 64.145,1.123 "/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" fill="none"
+ d="M15.033,22.653 C15.033,22.653 14.265,27.267 14.265,27.267 C14.265,27.267 16.567,27.267 16.567,27.267 C16.567,27.267 19.637,21.115 19.637,21.115 C19.637,21.115 15.033,22.653 15.033,22.653 Z"/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" fill="none"
+ d="M13.498,38.801 C13.498,38.801 16.567,45.721 16.567,45.721 "/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="butt" stroke-linejoin="miter" fill="none"
+ d="M68.749,11.119 C68.749,11.119 62.610,17.271 62.610,17.271 C62.610,17.271 65.679,18.809 65.679,18.809 C65.679,18.809 69.516,14.195 69.516,14.195 C69.516,14.195 68.749,11.119 68.749,11.119 Z"/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="round" stroke-linejoin="miter" fill="none"
+ d="M61.842,21.884 C61.842,21.884 56.471,28.805 56.471,28.805 "/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="round" stroke-linejoin="round" fill="none"
+ d="M56.471,35.725 C56.471,35.725 58.005,35.725 58.005,35.725 C58.005,35.725 58.005,41.107 58.005,41.107 C58.005,41.107 56.471,41.107 56.471,41.107 C56.471,41.107 56.471,35.725 56.471,35.725 Z"/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="round" stroke-linejoin="round" fill="none"
+ d="M55.234,53.800 C55.234,53.800 56.666,53.800 56.666,53.800 C56.666,53.800 54.136,58.642 54.136,58.642 C54.136,58.642 52.975,58.642 52.975,58.642 C52.975,58.642 55.234,53.800 55.234,53.800 Z"/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="round" stroke-linejoin="round" fill="none"
+ d="M18.400,56.106 C18.400,56.106 19.833,56.106 19.833,56.106 C19.833,56.106 15.800,61.099 15.800,61.099 C15.800,61.099 14.265,61.868 14.265,61.868 C14.265,61.868 18.400,56.106 18.400,56.106 Z"/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="round" stroke-linejoin="round" fill="none"
+ d="M31.915,88.781 C31.915,88.781 28.845,91.088 28.845,91.088 C28.845,91.088 25.776,91.088 25.776,91.088 "/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="round" stroke-linejoin="round" fill="none"
+ d="M48.030,71.864 C48.030,71.864 41.891,78.785 41.891,78.785 C41.891,78.785 43.425,78.785 43.425,78.785 C43.425,78.785 48.030,71.864 48.030,71.864 Z"/>
+<path fill-rule="evenodd"  stroke="rgb(134, 139, 142)" stroke-width="1px" stroke-linecap="round" stroke-linejoin="round" fill="none"
+ d="M8.126,74.171 C8.126,74.171 10.429,77.247 10.429,77.247 C10.429,77.247 8.894,73.402 8.894,73.402 C8.894,73.402 8.126,74.171 8.126,74.171 Z"/>
 </svg>

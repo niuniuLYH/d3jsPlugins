@@ -11,10 +11,8 @@
 				child_name : '',
 				parent_id : '',
 				parent_name : ''
-			},
-			'colorful':true,
-			'is_click' : true//选择是否进行萃取，false为不进行萃取，true为萃取。主要用在首页，点击地图跳转至区域监控页面而不进行萃取
-		};
+				}
+			};
 
 		this_.initDataOption = {};//设置插件中使用的对象
 		this_.initDataOption = defalutDataOptions;
@@ -24,6 +22,7 @@
 			}else{
 				this_.initDataOption[tem] = dataOptions[tem];
 			}
+
 		}
 		this_.container = d3.select('#'+this_.initDataOption.containerId);
 	}
@@ -37,21 +36,25 @@
 			var full_screen = this_.container;
 
 			var rect = full_screen.node().getBoundingClientRect();
+			var h = parseInt(rect.height);
+			var w = parseInt(rect.width);
 
 			var map_div = full_screen.append("div")
 				.attr("class","map_div_out");
 
 			var returnSvgDiv = map_div.append('div').attr({'class':'return-div'});
 			var container = map_div.append('div')
-				.attr('class','cenmap');
-
+				.attr('class','cenmap')
+				.style({
+					//"height":h + "px",
+					//"width":w - 170 + "px"
+				});
 			var svg = container.append('svg')
 				.attr('width', '100%')
 				.attr('height', '100%')
 				.attr('preserveAspectRatio', 'xMidYMid meet')
 				.attr('viewBox', '0 0 '+ 800 +' '+ 600)
-				.attr('class', 'mapBox')
-				.attr('xmlns','http://www.w3.org/2000/svg')
+				.attr('id', 'mapBox')
 				.append("g").attr({'class':'mapSvg'});
 
 			create_return_svg(returnSvgDiv);
@@ -77,23 +80,26 @@
 
 			/**点击是否显示流向的按钮**/
 			full_screen.selectAll(".javafile-a,.javafile-span").on("click",function(){
-				var is_show_line = mapLineSwitch(this_.container);
+				var is_show_line = javaFileSlide(false,this_.container);
 				setLocalStorage("map_line",JSON.stringify(is_show_line));
 				if(is_show_line){
-					full_screen.selectAll(".circle-line-bg,.circle-line,.comets,.sourPointer")
+					full_screen.selectAll(".circle-line-bg,.circle-line")
+						.style("display","inline-block");
+					full_screen.selectAll(".comets")
 						.style("display","inline-block");
 				}else{
-					full_screen.selectAll(".circle-line-bg,.circle-line,.comets,.sourPointer")
+					full_screen.selectAll(".circle-line-bg,.circle-line")
+						.style("display","none");
+					full_screen.selectAll(".comets")
 						.style("display","none");
 				}
 			});
 
 			var this_id = full_screen[0][0].id;
-
 			/**
 			 * hover到连线时的滤镜效果
 			 */
-			var line_filter_svg = full_screen.append("svg")
+			var line_filter_svg = full_screen.select("#page_container").append("svg")
 				.attr({
 					"width":"0",
 					"height":"0"
@@ -107,54 +113,6 @@
 					"in":"SourceGraphic",
 					"stdDeviation":"5"
 				});
-
-			/**数据点的滤镜效果**/
-			var circle_filter_svg = full_screen.append("svg")
-				.attr({
-					"width":"0",
-					"height":"0"
-				});
-			circle_filter_svg.append("filter")
-				.attr({
-					"id":this_id +"_circle_f",
-					'width':'300%',
-					'height':'300%'
-				})
-				.append("feGaussianBlur")
-				.attr({
-					"stdDeviation":"0.5"
-				});
-
-			/**生成彗星的尾巴的线性渐变的滤镜**/
-			var linear_gradient = full_screen.append("svg")
-				.attr({
-					"width":"0",
-					"height":"0"
-				})
-				.append("defs")
-				.append("linearGradient")
-				.attr("id",this_id+"_gradient");
-
-			linear_gradient.append("stop")
-				.attr({
-					"offset":"20%",
-					"stop-color":"rgba(255,255,255,.2)"
-				});
-			linear_gradient.append("stop")
-				.attr({
-					"offset":"50%",
-					"stop-color":"rgba(255,255,255,.5)"
-				});
-			linear_gradient.append("stop")
-				.attr({
-					"offset":"70%",
-					"stop-color":"rgba(255,255,255,.7)"
-				});
-			linear_gradient.append("stop")
-				.attr({
-					"offset":"100%",
-					"stop-color":"rgba(255,255,255,1)"
-				});
 		},
 
 		/**
@@ -163,18 +121,17 @@
 		 * @param d -- 获取到的地图数据
 		 */
 		drawMapPath :function(path,d){
-			var this_ = this,
-				tooltip = drawBack(this_.container),
-				flag = this_.initDataOption.map_level;
-			this_.container.select(".mapSvg").selectAll(".map_back2,.map_back1,.map_back3,.map_truth").selectAll("path").remove();
+			var this_ = this;
+			var tooltip = drawBack(this_.container);
 
+			var flag = this_.initDataOption.map_level;
+			this_.container.select(".mapSvg").selectAll("g").selectAll("path").remove();
 			this_.container.select('.map_back1').selectAll('path')//地图错位的阴影
 				.data(d.features)
 				.enter()
 				.append('path')
 				.attr('d', path)
 				.attr('fill', '#0B0B0B')
-
 				.attr('stroke', '#383838')
 				.attr('stroke-width', '2');
 			this_.container.select('.map_back2').selectAll('path')//地图外围的描边
@@ -183,16 +140,14 @@
 				.append('path')
 				.attr('d', path)
 				.attr('fill', '#4390A0')
-				.attr('stroke', '#90A1A4')
-				.attr('stroke-width', '4');
-
+				.attr('stroke', '#7D8A92')
+				.attr('stroke-width', '3');
 			this_.container.select('.map_back3').selectAll('path')//hover上去之后省级等的背景
 				.data(d.features)
 				.enter()
 				.append('path')
 				.attr('d', path)
-				.attr('fill', '#1F3D5D')
-				.attr('stroke','none');
+				.attr('fill', '#063e3d');
 
 			this_.container.select(".mapSvg").select(".map_truth").selectAll('path')//画地图
 				.data(d.features)
@@ -201,64 +156,93 @@
 				.attr('d', path)
 				.attr('id', function(d) { return d.id; })
 				.attr('class','map')
-				.attr('fill',function(d){
-					return this_.initDataOption.colorful　? d.backColor : '';
-				})
-				.attr('stroke', '#798ea3')
+				.attr('fill', '#19262E')
+				.attr('stroke', '#7D8A92')
 				.attr('stroke-width', '1');
 
 			this_.container.select("#southSeaG").remove();
+			if(flag == 0){
+				this_.container.select('.cenmap').append("div")
+					.attr("class","nanhai-div")
+					.append("img");
+				this_.container.select(".nanhai-div").select("img").attr({
+					"src":"../static/img/nanhai_no_data.svg"
+				});
+
+				//var southSeaG = d3.select(".cenmap").select("svg").append("g").attr("id","southSeaG");
+				//d3.xml(STATIC_URL + "mapjsons/southchinasea.svg", function(error, xmlDocument) {
+				//	//southSeaGBack1.html(function(d){
+				//	//	return d3.select(this).html() + xmlDocument.getElementsByTagName("g")[0].outerHTML;
+				//	//});
+				//	southSeaG.html(function(d){
+				//		return d3.select(this).html() + xmlDocument.getElementsByTagName("g")[0].outerHTML;
+				//	});
+				//
+				//	//确定南海的位置
+				//	var gSouthSea = d3.selectAll("#southsea");
+				//	var southSea = gSouthSea[0][0].getBBox();
+				//	var southSea_width = southSea.width;
+				//	var southSea_height = southSea.height;
+				//	var mapG = d3.select(".mapSvg").select("g")[0][0].getBBox();
+				//	var mapG_width = mapG.width;
+				//	var mapG_height = mapG.height;
+				//	var mapG_x = mapG.x;
+				//	var mapG_y = mapG.y;
+				//	var trans_x = mapG_x + mapG_width - southSea_width * 0.67;
+				//	var trans_y = mapG_y + mapG_height - southSea_height * 0.6;
+				//
+				//	//var trans_ba_y = trans_x +5;
+				//	//var trans_ba_x = trans_y +10;
+				//
+				//	d3.select('#southSeaG').attr("transform","translate("+trans_x +","+trans_y+")scale(0.5)").attr("class","southsea");
+				//	//d3.select('#southSeaGBack1').attr("transform","translate("+ trans_ba_y +","+ trans_ba_x +")scale(0.5)").attr("class","southsea");
+				//});
+			}
 
 			//获取g的宽度和高度，以及其坐标
-			var g_info = this_.container.select(".mapSvg").select("g")[0][0].getBBox(),
-				g_width = g_info.width + 20,
-				g_height = g_info.height + 20,
-				g_x = g_info.x - 5,
-				g_y = g_info.y - 5;
+			var g_info = this_.container.select(".mapSvg").select("g")[0][0].getBBox();
+			var g_width = g_info.width + 20;
+			var g_height = g_info.height + 20;
+			var g_x = g_info.x - 5;
+			var g_y = g_info.y - 5;
 
 			//给svg重新赋viewBox的值，使得地图在svg的中间位置
-			this_.container.select(".mapBox").attr({
+			this_.container.select("#mapBox").attr({
 				"viewBox":g_x + " " + g_y + " " + g_width + " " + g_height
 			});
 
-			if(flag == 0){
-				if(this_.container.select('.nanhai-div').empty()){
-					var nanhai_g = this_.container.select('.mapBox').append('image').attr({
-						'class' : 'nanhai-div',
-						'xlink:href' : "../static/img/nanhai_no_data.svg",
-						height : "16.5%",
-						width : "9%",
-						preserveAspectRatio : "none meet"
-					});
-					var nanhai_info = nanhai_g[0][0].getBBox(),
-						nanhai_width = g_width - 20 - nanhai_info.width,
-						nanhai_height = g_height - 20 - nanhai_info.height;
-					nanhai_g.attr({
-						x : nanhai_width,
-						y : nanhai_height
-					});
-				}
-			}
 			this_.getData();
 
 			this_.container.selectAll('.map')
 				.on('mouseover',function(d,i){
 					d3.select(this)
-						.classed('hover-map-style',true);
+						.interrupt()
+						.transition()
+						.attr("stroke","#DEDFF3")
+						.attr("fill","#074c4b")
+						.attr('transform','translate(-3,-5)')
+						.duration(200);
+
 					tooltip.style("opacity",0.6);
 				})
 				.on('mouseout',function(d,i){
 					d3.select(this)
-						.classed('hover-map-style',false);
+						.interrupt()
+						.transition()
+						.attr('stroke',originalColor(this,true))
+						.attr("fill",originalColor(this,false))
+						.attr('transform','translate(0,0)')
+						.duration(200);
+
 					tooltip.style("opacity",0.0);
 				})
 				.on("mousemove",function(d){
 					/** 鼠标移动时，更改样式 left 和 top 来改变提示框的位置 */
 
-					var map_div_left = this_.container.select(".cenmap")[0][0].getBoundingClientRect().left,
-						map_div_top = this_.container.select(".cenmap")[0][0].getBoundingClientRect().top,
-						mouse_left = parseInt(d3.event.pageX),
-						mouse_top = parseInt(d3.event.pageY);
+					var map_div_left = this_.container.select(".cenmap")[0][0].getBoundingClientRect().left;
+					var map_div_top = this_.container.select(".cenmap")[0][0].getBoundingClientRect().top;
+					var mouse_left = parseInt(d3.event.pageX);
+					var mouse_top = parseInt(d3.event.pageY);
 
 					tooltip.html(d.properties.name)
 						.style("left", (mouse_left -  map_div_left) + 20 + "px")
@@ -271,9 +255,6 @@
 				this_.container.selectAll('.map')
 					.classed("unclick",false)
 					.on('click', function (d) {
-						if(!this_.initDataOption.is_click){//判断是否进行下级萃取，this_.initDataOption.is_click值为false为不进行萃取，true为萃取。主要用在首页，点击地图跳转至区域监控页面而不进行萃取
-							return false;
-						}
 						if(d3.event.detail==1){
 							var bool = 1;
 							var clock_num = this_.container.select("#dest_city").attr("data_name");
@@ -324,9 +305,9 @@
 			}
 
 			if(flag == 0){
-				this_.container.selectAll(".return-mark-g,.svf-back").classed("unclick",true);
+				this_.container.select("#return-mark-r").classed("unclick",true);
 			}else{
-				this_.container.selectAll(".return-mark-g,.svf-back")
+				this_.container.select("#return-mark-r")
 					.classed("unclick",false)
 					.on('click',function(d){//返回上一级地图的点击事件
 						this_.container.select(".mapSvg").interrupt().transition().duration(0).attr('transform', 'scale(1)');
@@ -334,6 +315,7 @@
 						if(flag == 1){ // 如果是二级地图，点击转回全国地图
 							province_id = this_.container.select("#dest_city").attr("data_name");
 							this_.returnFun(true,province_id);
+
 							this_.initDataOption.map_level = 0;
 							this_.initDataOption.province_name = '';
 
@@ -364,15 +346,14 @@
 			var province_name = this_.initDataOption.province_name;
 			var province_e = conversion(province_name);
 			//立体地图的背景层
-			if(this_.container.select('.map_back3').empty()){
-				this_.container.select(".mapSvg").append("g").attr({'transform':'translate(5,10)'}).attr('class','map_back1');
-				this_.container.select(".mapSvg").append('g').attr('class','map_back2');
-				this_.container.select(".mapSvg").append('g').attr('class','map_back3');
-			}
-			this_.container.select('.map_truth').remove();
-			var g = this_.container.select(".mapSvg").append('g').attr('class','map_truth');
+			this_.container.select(".mapSvg").append("g").attr({'transform':'translate(5,10)'}).attr('class','map_back1');
+			this_.container.select(".mapSvg").append('g').attr('class','map_back2');
+			this_.container.select(".mapSvg").append('g').attr('class','map_back3');
 
+			var g = this_.container.select(".mapSvg").append('g').attr('class','map_truth');
 			var projection,path,url;
+			var url_default1 = 'http://onirzhj5y.bkt.clouddn.com/';
+			var url_default2 = 'http://oo1a66tov.bkt.clouddn.com/';
 
 			switch (this_.initDataOption.map_level){
 				case 0:{
@@ -420,26 +401,31 @@
 		 * @param projection
 		 */
 		getData : function(){
-			var this_ = this,
-				projection = this_.projection,
-				app_name = '' ,intf_name = '',
-				earliest = "",trans_type = '',
-				app_menu_list = d3.select('#apps-list-div').select('.selecting'),
-				selected_app = d3.select('#selected-app-div').selectAll('.selected');
-			selected_app[0] && selected_app[0].forEach(function(ele_value,ele_index){
-				var data_name = ele_value.getAttribute('data-app-name');
-				if(data_name.indexOf('app') > -1){
-					app_name = data_name;
-				}else if(data_name.indexOf('intf' > -1)){
-					intf_name = data_name;
-				}
-			});
+			var this_ = this;
+			var projection = this_.projection;
 
-			trans_type = app_menu_list[0][0] && app_menu_list.attr('data-trans-text') || '';
+			var app_name = "",intf_name = "",earliest = "", trans_type = "";
 
+			if(!(d3.select("#app_name").empty())){
+				app_name = d3.select("#app_name").attr("name");
+			}else{
+				app_name = "";
+			}
+
+			if(!(d3.select("#intf_name").empty())){
+				intf_name = d3.select("#intf_name").attr("name");
+			}else{
+				intf_name = "";
+			}
+
+			if(!(d3.select("#trans_trade").empty())){
+				trans_type = d3.select("#trans_trade").text();
+			}else{
+				trans_type = "";
+			}
 			/**设置earliest的值**/
 			earliest = getRefreshTime();
-			d3.json('http://onirzhj5y.bkt.clouddn.com/map_data.json')
+			d3.json('http://onirzhj5y.bkt.clouddn.com/map_data_new.json')
 				.header("Content-Type", "application/x-www-form-urlencoded")
 				.get('', function (e, d) {
 					if(!e) {
@@ -449,12 +435,12 @@
 							this_.container.selectAll('.blingblingG').remove();
 							this_.container.selectAll('.line-svg').remove();
 
-							this_.initDataOption.map_level == 0 && this_.container.select(".nanhai-div").attr({
-								"xlink:href":"../static/img/nanhai_no_data.svg"
+							this_.initDataOption.map_level == 0 && this_.container.select(".nanhai-div").select("img").attr({
+								"src":"../static/img/nanhai_no_data.svg"
 							});
 						}else{
-							this_.initDataOption.map_level == 0 && this_.container.select(".nanhai-div").attr({
-								"xlink:href":"../static/img/nanhai.svg"
+							this_.initDataOption.map_level == 0 && this_.container.select(".nanhai-div").select("img").attr({
+								"src":"../static/img/nanhai.svg"
 							});
 
 							if(!(this_.container.select(".no_data_div").empty())){
@@ -492,22 +478,48 @@
 				dest_city_t = this_.initDataOption.province_info.parent_name,
 				dest_id = this_.initDataOption.province_info.parent_id;
 
-			this_.container.select(".return-mark-g .cursor-path")
-				.classed('switch-map-path',true);
-
-			this_.container.select('.return-mark-g')
-				.classed('switch-map-g',true);
-
-			this_.container.select(".svf-back")
-				.classed('switch-map-back',true);
-			this_.container.select(".nanhai-div").style("display","none");
-
 			this_.container.select(".mapSvg").attr({"transform":'translate(0,0)'});
 			if(flag){
+				this_.container.select("#return-mark-r")
+					.interrupt()
+					.transition()
+					.attr({'opacity':100,transform :"translate(0,0)"})
+					.duration(800);
+				this_.container.select("#return-mark-g")
+					.interrupt()
+					.transition()
+					.attr({'opacity':0,transform :"translate(0,0)"})
+					.duration(800);
+				this_.container.select("#svf-back")
+					.interrupt()
+					.transition()
+					.attr({'opacity':100})
+					.duration(800);
 				this_.container.select("#dest_city")
 					.attr("data_name",propertyId)
 					.html(propertyName);
+
+				this_.container.select(".nanhai-div").style("display","none");
+
 			}else{
+				this_.container.select("#return-mark-r")
+					.attr({'opacity':100,transform :"translate(-45,0)"})
+					.interrupt()
+					.transition()
+					.attr({transform :"translate(0,0)"}).duration(800);
+				this_.container.select("#return-mark-g")
+					.attr({'opacity':0,transform :"translate(-45,0)"})
+					.interrupt()
+					.transition()
+					.attr({transform :"translate(0,0)"}).duration(800);
+
+				this_.container.select("#svf-back")
+					.interrupt()
+					.transition().attr({'opacity':100})
+					.duration(800);
+
+				this_.container.select(".nanhai-div").style("display","none");
+
 				var sour_id = this_.container.select("#dest_city").attr("data_name")|| dest_id;
 				this_.container.select("#sour_city")
 					.attr("data_name",sour_id)
@@ -527,15 +539,21 @@
 			var this_ = this;
 			this_.container.select(".mapSvg").attr({"transform":'translate(0,0)'});
 			if(flag){
-
-				this_.container.select(".return-mark-g .cursor-path")
-					.classed('switch-map-path',false);
-
-				this_.container.select('.return-mark-g')
-					.classed('switch-map-g',false);
-
-				this_.container.select(".svf-back")
-					.classed('switch-map-back',false);
+				this_.container.select("#return-mark-r")
+					.interrupt()
+					.transition()
+					.attr({'opacity':0,transform :"translate(-45,0)"})
+					.duration(800);
+				this_.container.select("#return-mark-g")
+					.interrupt()
+					.transition()
+					.attr({'opacity':100,transform :"translate(-45,0)"})
+					.duration(800);
+				this_.container.select("#svf-back")
+					.interrupt()
+					.transition()
+					.attr({'opacity':0})
+					.duration(800);
 
 				this_.container.select("#dest_city")
 					.attr("data_name","")
@@ -552,6 +570,23 @@
 
 				this_.container.select(".nanhai-div").style("display","inline-block");
 			}else{
+				this_.container.select("#return-mark-r")
+					.attr({'opacity':100,transform :"translate(-45,0)"})
+					.interrupt()
+					.transition()
+					.attr({transform :"translate(0,0)"})
+					.duration(800);
+				this_.container.select("#return-mark-g")
+					.attr({'opacity':0,transform :"translate(-45,0)"})
+					.interrupt()
+					.transition()
+					.attr({transform :"translate(0,0)"})
+					.duration(800);
+				this_.container.select("#svf-back")
+					.interrupt()
+					.transition()
+					.attr({'opacity':100})
+					.duration(800);
 
 				this_.container.select(".nanhai-div").style("display","none");
 
@@ -584,115 +619,81 @@
 		 * @param projection --
 		 */
 		drawCircle : function (data){
-			var this_ = this,
-				this_id = this_.container[0][0].id,
-				projection = this_.projection,
-				mapLevel = this_.initDataOption.map_level;
-
+			var this_ = this;
+			var projection = this_.projection;
+			var mapLevel = this_.initDataOption.map_level;
 			this_.container.selectAll('.blingblingG').remove();
-			if(mapLevel == 0){//一级地图提取data.mapcount的数据，并把数据转换成data.ll_data的格式
+			if(mapLevel == 0){
 				var mapCountArr = manageData(data.mapcount);
 			}
-			var city_all_count = data.mapcount,
-				each_data = mapLevel != 0 ? data.ll_data : mapCountArr,
-				circle_g = this_.container.select(".mapSvg")
+			var city_all_count = data.mapcount;
+			var each_data = mapLevel != 0 ? data.ll_data : mapCountArr;
+
+			each_data.forEach(function(value,key){
+				var circle_g = this_.container.select(".mapSvg")
 					.append('g')
 					.attr("class","blingblingG");
-
-			/**目标地址交易量的点**/
-			each_data.forEach(function(value,key){
-				var	circle_d_old = this_.container.select('.destPointer.' + this_id + conversion(value.d.c)),
-					destpos = projection([Number(value.d.longitude),Number(value.d.latitude)]);
-
-				if(circle_d_old.empty()){//规避产生相同位置的目标节点
-					var dest_circle = circle_g.append('circle')
-						.attr({
-							'class':function(){
-								var circle_id = this_id + conversion(value.d.c);
-								return 'blingbling destPointer ' + circle_id;
-							},
-							'filter':"url(#"+this_id+"_circle_f)",
-							'r':1.5,
-							'all_data' : function(){
-								var city_count = '';
-								city_all_count.forEach(function(city_value,i){
-									if(value.d.c.indexOf(city_value.d.c) > -1){
-										city_count = city_value.trans_count;
-									}
-								});
-								return city_count + '_' + value.d.c;
-							},
-							'cx' : destpos[0],
-							'cy' : destpos[1]
-						})
-						.style({
-							'transform-origin': destpos[0] +'px ' + destpos[1] + 'px',
-							'-moz-transform-origin':destpos[0] +'px ' + destpos[1] + 'px',
-							'-ms-transform-origin':destpos[0] +'px ' + destpos[1] + 'px'
-						});
-					var all_data = dest_circle.attr('all_data').split('_')[0];//取得每个数据点的数据总和
-					dest_circle.classed({
-						'circle-least' :  !! (all_data <= 500) ,
-						'circle-middle' : !! (all_data < 2000 && all_data > 500),
-						'circle-large' : !! (all_data >= 2000)
-					})
-				}
+				/**目标地址交易量的点**/
+				circle_g.append('circle')
+					.attr({
+						'class':'blingbling',
+						'r':function(){
+							if(value.trans_count >= 700){
+								return 10;
+							}else if(value.trans_count <=100){
+								return 3;
+							}else{
+								return value.trans_count / 100 ;
+							}
+						},
+						'fill':'rgb(41,201,197)',
+						"data-city-name":value.d.c,
+						'transform':function(){
+							var destpos = { 'cp':[Number(value.d.longitude),Number(value.d.latitude)]};
+							return 'translate('+ projection(destpos.cp)+ ')';
+						}
+					});
+				/**源地址圆点**/
+				circle_g.append('circle')
+					.attr({
+						'class': 'blingbling',
+						'r': 2,
+						'fill': 'rgb(41,201,197)',
+						"data-city-name": value.s.c,
+						'transform': function () {
+							var destpos = {'cp': [Number(value.s.longitude), Number(value.s.latitude)]};
+							return 'translate(' + projection(destpos.cp) + ')';
+						}
+					});
 			});
-			/**源地址圆点**/
-			each_data.forEach(function(value,key){
-				var circle_s_old = this_.container.select('.' + this_id + conversion(value.s.c)),//选择到已经在该位置画过的源节点
-					sourpos = projection([Number(value.s.longitude),Number(value.s.latitude)]);
-
-				if(circle_s_old.empty()){
-					var sour_circle = circle_g.append('circle')
-						.attr({
-							'class': function(){
-								var circle_id = this_id + conversion(value.s.c);
-								return 'blingbling sourPointer ' + circle_id;
-							},
-							'filter':"url(#"+this_id+"_circle_f)",
-							'all_data' : function(){
-								var city_count = '';
-								city_all_count.forEach(function(city_value,i){
-									if(value.s.c.indexOf(city_value.d.c) > -1){
-										city_count = city_value.trans_count;
-									}
-								});
-								return city_count + '_' + value.s.c;
-							},
-							'r':1.5,
-							'cx' : sourpos[0],
-							'cy' : sourpos[1]
-						})
-						.style({
-							'transform-origin':sourpos[0] +'px ' + sourpos[1] + 'px',
-							'-moz-transform-origin':sourpos[0] +'px ' + sourpos[1] + 'px',
-							'-ms-transform-origin':sourpos[0] +'px ' + sourpos[1] + 'px',
-							'display' : JSON.parse(localStorage.getItem("map_line")) ? 'inline-block' : 'none'
-						});
-					var all_data = sour_circle.attr('all_data').split('_')[0];//取得每个数据点的数据总和
-					sour_circle.classed({
-						'circle-least' : !! (all_data <= 500),
-						'circle-middle' : !! (all_data < 2000 && all_data > 500),
-						'circle-large' : !! (all_data >= 2000),
-					})
-				}
-			});
-
 			/**地图数据点的动效函数**/
+				//	blingbling();
 			this_.container.selectAll(".blingbling")
 				.on('mouseout',function(d,i){
 					this_.container.select(".tootip-style").style("opacity",0.0);
 				})
 				.on("mousemove",function(d){
-					var city_info = d3.select(this).attr("all_data").split('_');
+					var city_name = d3.select(this).attr("data-city-name"),
+						city_count = '';
+					city_all_count.forEach(function(value,i){
+						if(value.d.c == city_name){
+							city_count = value.trans_count;
+						}
+					});
+
 					/** 鼠标移动时，更改样式 left 和 top 来改变提示框的位置 **/
 					var map_div_left = this_.container.select(".cenmap")[0][0].getBoundingClientRect().left;
 					var map_div_top = this_.container.select(".cenmap")[0][0].getBoundingClientRect().top;
 					var mouse_left = parseInt(d3.event.pageX);
 					var mouse_top = parseInt(d3.event.pageY);
 
-					this_.container.select(".tootip-style").html(city_info[1] + "交易量：" + (city_info[0] ? city_info[0] : 0))
+					this_.container.select(".tootip-style").html(function(){
+						if(city_count){
+							return city_name + "交易量：" + city_count;
+						}else{
+							return city_name + "交易量：" + 0;
+						}
+					})
 						.style("left", (mouse_left -  map_div_left) + 20 + "px")
 						.style("top", (mouse_top - map_div_top) + 20 + "px")
 						.style("opacity",0.6);
@@ -706,10 +707,10 @@
 		 * @param projection -- 方法
 		 */
 		drawLine : function (data){
-			var this_ = this,
-				projection = this_.projection,
-				mapLevel = this_.initDataOption.map_level,
-				this_id = this_.container[0][0].id;
+			var this_ = this;
+			var projection = this_.projection;
+			var mapLevel = this_.initDataOption.map_level;
+			var this_id = this_.container[0][0].id;
 			this_.container.selectAll('.line-svg').remove();
 			if(mapLevel == 0){
 				var mapCountArr = manageData(data.mapcount);
@@ -720,7 +721,8 @@
 				})
 				.enter()
 				.append("g")
-				.attr("class","line-svg");
+				.attr("class","line-svg")
+				.append("g");
 
 			/**生成用于观看的连线**/
 			line_g.append("path")
@@ -728,7 +730,7 @@
 					"class":"circle-line",
 					"stroke-width":"2",
 					"fill":"none",
-					"stroke":"rgba(139,164,172, 0.2)",
+					"stroke":"rgba(71, 144, 95, 0.2)",
 					"d":function(d){
 						var tempdest = { 'cp':[Number(d.d.longitude),Number(d.d.latitude)]};
 						var tempsour = { 'cp':[Number(d.s.longitude),Number(d.s.latitude)]};
@@ -769,14 +771,40 @@
 					}
 				});
 
+			/**生成线性渐变的滤镜**/
+			var linear_gradient = line_g.append("defs")
+				.append("linearGradient")
+				.attr("id",this_id+"_gradient");
+
+			linear_gradient.append("stop")
+				.attr({
+					"offset":"20%",
+					"stop-color":"rgba(255,255,255,.2)"
+				});
+			linear_gradient.append("stop")
+				.attr({
+					"offset":"50%",
+					"stop-color":"rgba(255,255,255,.5)"
+				});
+			linear_gradient.append("stop")
+				.attr({
+					"offset":"70%",
+					"stop-color":"rgba(255,255,255,.7)"
+				});
+			linear_gradient.append("stop")
+				.attr({
+					"offset":"100%",
+					"stop-color":"rgba(255,255,255,1)"
+				});
+
 			/**生成动效，“彗星尾巴”**/
 			var comet_tail = line_g.append("g")
 				.attr({"clip-path":function(d,i){
 					return "url(#"+ this_id +"_clip"+i+")";
 				}
 				});
-			var comet_path = comet_tail.append("path")
-				.attr({
+			var comet_path = comet_tail.append("path").
+				attr({
 					"d":"M 0,0 Q 15,2 17,0 Q 15,-2 0,0",
 					"stroke-width":"1px",
 					"stroke":"url(#"+ this_id +"_gradient)",
@@ -885,11 +913,72 @@
 				this_.container.select(".javafile-on").text("开");
 			}
 
-			mapLineSwitch(this_.container);
+			javaFileSlide(false,this_.container);
 		}
 	};
 
-	return MapMainFun;
+	/**
+	 * 地图数据点的动效--动效暂时还有效率问题
+	 */
+	function blingbling(){
+		d3.selectAll(".bling_1")
+			.interrupt()
+			.transition()
+			.ease("linear")
+			.attr({
+				"r":"15",
+				"stroke":"rgba(41,201,197,0)"
+			})
+			.duration(1000)
+			.each("end",function(){
+				d3.select(this)
+					.attr({
+						"r":5,
+						"stroke":"rgba(41,201,197,1)"
+					});
+				blingbling();
+			});
+
+		d3.selectAll(".bling_2")
+			.interrupt()
+			.transition()
+			.ease("linear")
+			.attr({
+				"r":"15",
+				"stroke":"rgba(41,201,197,0)"
+			})
+			.delay(500)
+			.duration(1000)
+			.each("end",function(){
+				d3.select(this)
+					.attr({
+						"r":5,
+						"stroke":"rgba(41,201,197,1)"
+					});
+				blingbling();
+			});
+	}
+
+	/**
+	 * 设置地图path的fill和stroke的颜色
+	 * @param this_
+	 * @returns {*}
+	 */
+	function originalColor(this_,flag){
+		if(d3.select(this_).classed("no_data")){//是否有数据
+			if(flag){
+				return "#434D56";//stroke
+			}else{
+				return "#0D1A23";//fill
+			}
+		}else{
+			if(flag){
+				return "#7D8A92";
+			}else{
+				return "#19262E"
+			}
+		}
+	}
 
 	/**
 	 * 画出地图hover上去的提示框
@@ -913,18 +1002,23 @@
 		returnSvgDiv.append('span').attr({'id':'sour_city'}).text("全国地图");
 		var return_svg = returnSvgDiv.append('svg')
 			.attr('class','map-return-btn')
-			.attr("viewBox",'10 0 25 25');
+			.attr("viewBox",'13 0 50 50');
 
-		return_svg.append("g").attr({'class':'svf-back','opacity':0}).append('path')//背景
-			.attr({"fill":"rgb(23, 38, 51)",
-				"d":"M11.000,-0.000 C11.000,-0.000 37.000,-0.000 37.000,-0.000 C43.075,-0.000 48.000,4.925 48.000,11.000 C48.000,11.000 48.000,11.000 48.000,11.000 C48.000,17.075 43.075,22.000 37.000,22.000 C37.000,22.000 11.000,22.000 11.000,22.000 C4.925,22.000 -0.000,17.075 -0.000,11.000 C-0.000,11.000 -0.000,11.000 -0.000,11.000 C-0.000,4.925 4.925,-0.000 11.000,-0.000 Z"});
+		return_svg.append("g").attr({'id':'svf-back','opacity':0}).append('path')//背景
+			.attr({"fill":"rgb(66, 66, 66)",
+				"d":"M16.500,8.000 C16.500,8.000 60.500,8.000 60.500,8.000 C69.613,8.000 77.000,15.387 77.000,24.500 C77.000,33.613 69.613,41.000 60.500,41.000 C60.500,41.000 16.500,41.000 16.500,41.000 C7.387,41.000 -0.000,33.613 -0.000,24.500 C-0.000,15.387 7.387,8.000 16.500,8.000 Z"});
 
-		var return_svg_g2 = return_svg.append("g").attr({transform :"translate(0,0)",'class':'return-mark-g'});//灰色
+		var return_svg_g2 = return_svg.append("g").attr({transform :"translate(-45,0)",'id':'return-mark-g'});//灰色
 		return_svg_g2.append('path')
-			.attr("fill",'rgb(183, 189, 199)')
-			.attr('class','cursor-path')
-			.attr("d","M11.000,-0.000 C11.000,-0.000 11.000,-0.000 11.000,-0.000 C17.075,-0.000 22.000,4.925 22.000,11.000 C22.000,11.000 22.000,11.000 22.000,11.000 C22.000,17.075 17.075,22.000 11.000,22.000 C11.000,22.000 11.000,22.000 11.000,22.000 C4.925,22.000 -0.000,17.075 -0.000,11.000 C-0.000,11.000 -0.000,11.000 -0.000,11.000 C-0.000,4.925 4.925,-0.000 11.000,-0.000 Z");
-		return_svg_g2.append('path').attr({'fill':'rgb(2, 13, 22)','d':"M11.500,19.454 C11.500,19.454 5.818,12.292 5.818,9.180 C5.818,6.068 8.362,3.545 11.500,3.545 C14.638,3.545 17.181,6.068 17.181,9.180 C17.181,12.292 11.500,19.454 11.500,19.454 ZM11.500,5.313 C9.346,5.313 7.600,7.044 7.600,9.180 C7.600,11.315 9.346,13.047 11.500,13.047 C13.653,13.047 15.399,11.315 15.399,9.180 C15.399,7.044 13.653,5.313 11.500,5.313 ZM11.500,11.942 C9.961,11.942 8.714,10.705 8.714,9.180 C8.714,7.654 9.961,6.418 11.500,6.418 C13.038,6.418 14.285,7.654 14.285,9.180 C14.285,10.705 13.038,11.942 11.500,11.942 Z"});
+			.attr("fill",'rgb(66, 66, 66)')
+			.attr("d","M60.500,8.000 C51.387,8.000 44.000,15.387 44.000,24.500 C44.000,28.952 44.000,41.000 44.000,41.000 C44.000,41.000 55.839,41.000 60.500,41.000 C69.613,41.000 77.000,33.613 77.000,24.500 C77.000,15.387 69.613,8.000 60.500,8.000 Z");
+		return_svg_g2.append('path').attr({'fill':'rgb(244, 244, 244)','d':'M60.500,35.000 C60.500,35.000 68.000,25.545 68.000,21.437 C68.000,17.330 64.642,14.000 60.500,14.000 C56.358,14.000 53.000,17.330 53.000,21.437 C53.000,25.545 60.500,35.000 60.500,35.000 ZM60.500,16.333 C63.343,16.333 65.647,18.619 65.647,21.437 C65.647,24.256 63.343,26.542 60.500,26.542 C57.657,26.542 55.353,24.256 55.353,21.437 C55.353,18.619 57.657,16.333 60.500,16.333 ZM60.500,25.083 C62.530,25.083 64.177,23.451 64.177,21.437 C64.177,19.424 62.530,17.792 60.500,17.792 C58.470,17.792 56.824,19.424 56.824,21.437 C56.824,23.451 58.470,25.083 60.500,25.083 Z'});
+
+		var return_svg_g = return_svg.append("g").attr({transform :"translate(-45,0)",'id':'return-mark-r','opacity':0});//红色
+		return_svg_g.append('path')
+			.attr("fill",'rgb(218, 81, 73)')
+			.attr("d","M60.500,8.000 C51.387,8.000 44.000,15.387 44.000,24.500 C44.000,28.952 44.000,41.000 44.000,41.000 C44.000,41.000 55.839,41.000 60.500,41.000 C69.613,41.000 77.000,33.613 77.000,24.500 C77.000,15.387 69.613,8.000 60.500,8.000 Z");
+		return_svg_g.append('path').attr({'fill':'rgb(244, 244, 244)','d':'M60.500,35.000 C60.500,35.000 68.000,25.545 68.000,21.437 C68.000,17.330 64.642,14.000 60.500,14.000 C56.358,14.000 53.000,17.330 53.000,21.437 C53.000,25.545 60.500,35.000 60.500,35.000 ZM60.500,16.333 C63.343,16.333 65.647,18.619 65.647,21.437 C65.647,24.256 63.343,26.542 60.500,26.542 C57.657,26.542 55.353,24.256 55.353,21.437 C55.353,18.619 57.657,16.333 60.500,16.333 ZM60.500,25.083 C62.530,25.083 64.177,23.451 64.177,21.437 C64.177,19.424 62.530,17.792 60.500,17.792 C58.470,17.792 56.824,19.424 56.824,21.437 C56.824,23.451 58.470,25.083 60.500,25.083 Z'});
 
 		returnSvgDiv.append('span')
 			.attr({'id':'dest_city'});
@@ -941,7 +1035,6 @@
 		open_span.append("span").attr("class","javafile-on").text("开");
 		open_span.append("span").attr("class","javafile-off").text("关");
 		open_span.append("a").attr("class","javafile-a");
-		mapLineSwitch(open_span)
 	}
 
 	/**
@@ -958,7 +1051,10 @@
 				.attr({"class":"no_data_div"})
 				.text("暂无数据！");
 		}
-		parent.selectAll(".map").classed("no_data",true);
+		parent.selectAll(".map").attr({
+			"fill":"#0D1A23",
+			"stroke":"#434D56"
+		}).classed("no_data",true);
 	}
 
 	/**
@@ -1043,6 +1139,7 @@
 	 * @returns {{pos: *[], linear_dire: string}} -- 返回的对象，其中包括控制点的坐标，和线上动画的移动方向
 	 */
 	function getConPointPos(sourPos,destPos){
+		var pathAttr = {};
 
 		var disX = Math.abs(destPos[0] - sourPos[0]);
 		var disY = Math.abs(destPos[1] - sourPos[1]);
@@ -1076,6 +1173,8 @@
 			}
 
 		}else if(sourPos[0] < destPos[0] && sourPos[1] >= destPos[1]){
+			//linear_dire = "linear-left";
+
 			argtan2 = Math.abs(argtan - Math.PI / 6);
 
 			conPointX = destPos[0] - dis1ToConPoint * Math.cos(argtan2);
@@ -1087,12 +1186,16 @@
 			}
 
 		}else if(sourPos[0] < destPos[0] && sourPos[1] < destPos[1]){
+			//linear_dire = "linear-left";
+
 			argtan2 = argtan + Math.PI / 6;
 
 			conPointX = sourPos[0] + dis1ToConPoint * Math.cos(argtan2);
 			conPointY = sourPos[1] + dis1ToConPoint * Math.sin(argtan2);
 
 		}else if(sourPos[0] >= destPos[0] && sourPos[1] < destPos[1]){
+			//linear_dire = "linear-right";
+
 			argtan2 = argtan + Math.PI / 6;
 
 			conPointX = sourPos[0] - dis1ToConPoint * Math.cos(argtan2);
@@ -1108,13 +1211,20 @@
 	/**
 	 * 点击滑块时的动画函数。
 	 */
-	function mapLineSwitch(parent){
+	function javaFileSlide(flag,parent){
 		if(!parent.select(".javafile-on").empty() && parent.select(".javafile-on").text()){
 			parent.select(".javafile-a")
 				.interrupt()
 				.transition()
 				.style({
-					"left": "-26px"
+					"left":function(){
+						if(flag){
+							return "-37px"
+						}else{
+							return "-32px"
+						}
+					},
+					"background":"#8F8F8F"
 				})
 				.duration(800)
 				.each('start',function(){
@@ -1124,14 +1234,14 @@
 					parent.select(".javafile-on").text("");
 					parent.select(".javafile-span").attr("name","off");
 				});
-			d3.selectAll('.blingbling').classed('stop-animate',false);
 			return 0;
 		}else{
 			parent.select(".javafile-a")
 				.interrupt()
 				.transition()
 				.style({
-					"left":"0px"
+					"left":"0px",
+					"background":"#10EDE6"
 				})
 				.duration(800)
 				.each('start',function(){
@@ -1140,7 +1250,6 @@
 					parent.select(".javafile-off").text("");
 					parent.select(".javafile-span").attr("name","on");
 				});
-			d3.selectAll('.blingbling').classed('stop-animate',true);
 			return 1;
 		}
 	}
@@ -3694,4 +3803,9 @@
 		}
 		return infoObj;
 	}
+
+	var exportObj = function(options){
+		new MapMainFun(options);
+	};
+	return MapMainFun;
 });
