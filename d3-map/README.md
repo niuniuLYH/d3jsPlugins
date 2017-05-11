@@ -40,4 +40,9 @@ var dataOptions1 = {
   - var province_in fo = JSON.parse(localStorage.getItem("province_info"));//获取本地存储的地图的相关信息，  
   - var province_name = province_info?(map_level == 1 ? province_info.child_name : province_info.child_id) : "";//获取地图展示的省的名字，“”为初始化的值，为全国地图  
   - 获取完之后就可以使用之前的方法，调用接口
- 
+#### 可能遇到的问题
+  将地图的json文件重新下载到了本地，放弃了将其放在七牛云服务器上（原因，修改很麻烦，七牛云的文件更新有延迟），在使用的时候，可能会报错，导致地图不能正确显示，如下图：
+  ![浏览器报错](http://ongbu23mm.bkt.clouddn.com/mapPlugins.png)
+  原因： Chrome不支持本地Ajax请求，当我在.html文件中访问.json文件时就会出现这个问题，就是说这个时候不能加载这个.html文件。  
+  解决办法 ： 如下图，右击浏览器选择属性，选择快捷方式选项卡，修改目标，在后面添加‘--allow-file-access-from-files’，注意前面有一个空格，然后重启浏览器即可。具体如下图：
+  ![解决办法](http://ongbu23mm.bkt.clouddn.com/mapPlugin2.png)
