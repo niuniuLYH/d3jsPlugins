@@ -373,13 +373,15 @@
 			var g = this_.container.select(".mapSvg").append('g').attr('class','map_truth');
 
 			var projection,path,url;
+			var url_default1 = 'http://onirzhj5y.bkt.clouddn.com/';
+			var url_default2 = 'http://oo1a66tov.bkt.clouddn.com/';
 
 			switch (this_.initDataOption.map_level){
 				case 0:{
 					projection = d3.geo.mercator()
 						.center([110,41])
 						.scale(720);
-					url = 'http://onirzhj5y.bkt.clouddn.com/map.json';
+					url = '../static/mapjsons/map.json';
 				}
 					break;
 				case 1:{
@@ -388,7 +390,7 @@
 					projection = d3.geo.mercator()
 						.center(coordinates)
 						.scale(scale);
-					url = url_default1 + province_e +'.json';
+					url = '../static/mapjsons/mapjson/' + province_e +'.json';
 				}
 					break;
 				case 2:{
@@ -399,7 +401,7 @@
 						.center(coordinates)
 						.scale(scale);
 					var province_name2 = province_name.length > 4 ? province_name : province_name + '00';
-					url = url_default2 + province_name2 +'.json';
+					url = '../static/mapjsons/geoJson/' + province_name2 +'.json';
 				}
 					break;
 			}
@@ -460,10 +462,7 @@
 							if(!(this_.container.select(".no_data_div").empty())){
 								this_.container.select(".no_data_div").remove();
 							}
-							this_.container.selectAll(".map").classed("no_data",false).attr({
-								"fill":"#19262E",
-								"stroke":"#7D8A92"
-							});
+
 							var data_arr = data.ll_data;
 							for(var i = data_arr.length - 1; i >= 0; i--){//过滤掉没有经纬度的数据。
 								if((data_arr[i].s["latitude"] == -1 && data_arr[i].s["longitude"] == -1) || (data_arr[i].d["latitude"] == -1 && data_arr[i].d["longitude"] == -1)){

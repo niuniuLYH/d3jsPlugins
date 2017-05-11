@@ -101,6 +101,7 @@
     background-color:black;
     border-radius:5px;
     z-index:1;
+    color: #fff;
 }
 .blingbling{
     cursor: pointer;
